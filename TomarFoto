@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+        body {
+            font-family: 'Lato', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #1a1a1a; 
+        }
+
+        /* --- SECCIÓN 1: CAPTURA --- */
+        .seccion-captura {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            background-color: #1a1a1a;
+            padding-bottom: 0px; /* Reducido a 0 para juntarlo con la galería */
+        }
+
+        .imagen-wrapper {
+            position: relative;
+            width: 100%;
+            line-height: 0; 
+        }
+
+        .imagen-hero {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .imagen-wrapper::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%; 
+            background: linear-gradient(to bottom, rgba(26,26,26,0) 0%, #1a1a1a 100%);
+            pointer-events: none;
+        }
+
+        .contenido-textos {
+            width: 100%;
+            margin-top: -70px; 
+            padding: 0px 20px 0px 20px; /* Relleno inferior en 0 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 2;
+            color: #ffffff;
+        }
+
+        .titulo { font-size: 28px; font-weight: 700; margin-bottom: 5px; letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
+        .subtitulo { font-size: 15px; color: #e0e0e0; margin-bottom: 25px; max-width: 320px; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+
+        .boton-camara {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 16px 36px; background-color: #d4af37; 
+            color: #1a1a1a; font-size: 16px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; border-radius: 50px; border: none; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); margin-bottom: 5px; /* Reducido para juntar más */
+            transition: transform 0.2s;
+        }
+        .boton-camara:active { transform: scale(0.95); }
+
+        .icon-cam { width: 24px; height: 24px; margin-right: 12px; fill: none; stroke: #1a1a1a; stroke-width: 1.5; }
+        
+        #input-media { display: none; }
+        #status { font-size: 14px; font-weight: 700; min-height: 20px; margin-top: 5px; color: #d4af37; }
+
+        /* --- SECCIÓN 2: GALERÍA --- */
+        .seccion-galeria {
+            background-color: #1a1a1a; 
+            padding: 5px 20px 60px 20px; /* Relleno superior casi en 0 para pegar ambas partes */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 60vh;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .galeria-titulo { 
+            font-size: 20px; 
+            font-weight: 700; 
+            margin-bottom: 20px; 
+            color: #ffffff; 
+            width: 100%; 
+            max-width: 400px; 
+            text-align: left; 
+        }
+        
+        .grid-galeria {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            width: 100%;
+            max-width: 400px;
+        }
+        .foto-item {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4); 
+            background-color: #333; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="seccion-captura">
+        <div class="imagen-wrapper">
+            <img class="imagen-hero" src="https://drive.google.com/thumbnail?id=1X3AJXqITKclWcSgyc7o7idKBqecRKRI5&sz=w1200" alt="Fondo VIP">
+        </div>
+        
+        <div class="contenido-textos">
+            <div class="titulo">Cámara VIP</div>
+            <div class="subtitulo">Toma una foto o graba un video corto (Máx 30 seg).</div>
+
+            <button class="boton-camara" id="btn-capturar">
+                <svg class="icon-cam" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                CAPTURAR
+            </button>
+            
+            <input type="file" accept="image/*,video/*" capture="environment" id="input-media">
+            <div id="status"></div>
+        </div>
+    </div>
+
+    <div class="seccion-galeria">
+        <div class="galeria-titulo">Últimas capturas en vivo 📸</div>
+        <div class="grid-galeria" id="contenedor-galeria">
+        </div>
+    </div>
+
+    <script>
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-ITwzdMThPc4iHYrqm60c9WPdpit_zd-3i-VILykk5uC2m_VKsu_ru_J4d6M5En3aIg/exec";
+
+        const btnCapturar = document.getElementById('btn-capturar');
+        const inputMedia = document.getElementById('input-media');
+        const statusDiv = document.getElementById('status');
+        const contenedorGaleria = document.getElementById('contenedor-galeria');
+
+        function cargarGaleria() {
+            contenedorGaleria.innerHTML = "<p style='grid-column: span 2; font-size: 14px; color: #bbb;'>Cargando galería...</p>";
+            
+            fetch(GOOGLE_SCRIPT_URL)
+            .then(response => response.json())
+            .then(fotos => {
+                contenedorGaleria.innerHTML = ""; 
+                if(!fotos || fotos.length === 0) {
+                    contenedorGaleria.innerHTML = "<p style='grid-column: span 2; font-size: 14px; color: #ccc;'>Aún no hay capturas. ¡Sé el primero!</p>";
+                    return;
+                }
+
+                fotos.forEach(foto => {
+                    const imgUrl = `https://drive.google.com/thumbnail?id=${foto.id}&sz=w400`;
+                    const imgElement = document.createElement('img');
+                    imgElement.src = imgUrl;
+                    imgElement.className = 'foto-item';
+                    contenedorGaleria.appendChild(imgElement);
+                });
+            })
+            .catch(error => {
+                contenedorGaleria.innerHTML = "<p style='grid-column: span 2; font-size: 14px; color: #ff6b6b;'>Error al cargar la galería.</p>";
+            });
+        }
+
+        cargarGaleria();
+
+        btnCapturar.addEventListener('click', () => { inputMedia.click(); });
+
+        inputMedia.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.type.startsWith('video/')) {
+                if (file.size > 41943040) { 
+                    statusDiv.style.color = "#ff6b6b";
+                    statusDiv.innerText = "❌ El video es muy pesado. Intenta grabar uno más corto.";
+                    inputMedia.value = "";
+                    return;
+                }
+
+                const videoElement = document.createElement('video');
+                videoElement.preload = 'metadata';
+                videoElement.onloadedmetadata = function() {
+                    window.URL.revokeObjectURL(videoElement.src);
+                    if (videoElement.duration > 31) { 
+                        statusDiv.style.color = "#ff6b6b";
+                        statusDiv.innerText = "❌ El video dura más de 30 segundos. Graba uno más corto.";
+                        inputMedia.value = "";
+                        return;
+                    }
+                    subirArchivo(file, 'Video');
+                }
+                videoElement.src = URL.createObjectURL(file);
+            } else {
+                subirArchivo(file, 'Foto');
+            }
+        });
+
+        function subirArchivo(file, tipo) {
+            statusDiv.style.color = "#d4af37";
+            statusDiv.innerText = tipo === 'Video' ? "⏳ Subiendo video a la galería..." : "⏳ Subiendo tu foto a la galería...";
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Data = e.target.result.split(',')[1];
+                const formData = new URLSearchParams();
+                
+                const extension = tipo === 'Video' ? '.mp4' : '.jpg';
+                const nombreArchivo = tipo + '_XV_' + Date.now() + extension;
+
+                formData.append('fileData', base64Data);
+                formData.append('mimeType', file.type);
+                formData.append('fileName', nombreArchivo);
+
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: formData
+                })
+                .then(() => {
+                    statusDiv.style.color = "#4cd137"; 
+                    statusDiv.innerText = `✨ ¡Listo! ${tipo} guardado en la pantalla.`;
+                    inputMedia.value = ""; 
+                    setTimeout(cargarGaleria, 2000); 
+                })
+                .catch(error => {
+                    statusDiv.style.color = "#ff6b6b";
+                    statusDiv.innerText = "❌ Hubo un error de conexión, intenta de nuevo.";
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>
