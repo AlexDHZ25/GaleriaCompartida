@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparte la Magia | Constanza</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lato:wght@300;400;700&display=swap');
 
         body {
             font-family: 'Lato', sans-serif;
@@ -12,286 +16,412 @@
             padding: 0;
             text-align: center;
             background-color: #1a1a1a; 
-        }
-
-        /* --- SECCIÓN 1: CAPTURA --- */
-        .seccion-captura {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            background-color: #1a1a1a;
-            padding-bottom: 0px; 
-        }
-
-        .imagen-wrapper {
-            position: relative;
-            width: 100%;
-            line-height: 0; 
-        }
-
-        .imagen-hero {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .imagen-wrapper::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 60%; 
-            background: linear-gradient(to bottom, rgba(26,26,26,0) 0%, #1a1a1a 100%);
-            pointer-events: none;
-        }
-
-        .contenido-textos {
-            width: 100%;
-            margin-top: -70px; 
-            padding: 0px 20px 0px 20px; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-sizing: border-box;
-            position: relative;
-            z-index: 2;
             color: #ffffff;
-        }
-
-        .titulo { font-size: 28px; font-weight: 700; margin-bottom: 5px; letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
-        .subtitulo { font-size: 15px; color: #e0e0e0; margin-bottom: 25px; max-width: 320px; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
-
-        /* Contenedor para los botones */
-        .contenedor-botones {
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+        }
+
+        /* --- MENÚ SUPERIOR --- */
+        .menu-superior {
             width: 100%;
-            max-width: 280px;
-            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            background-color: #111111;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            border-bottom: 1px solid #333;
         }
 
-        /* Botón Principal (Cámara) */
-        .boton-camara {
+        .tab-btn {
+            flex: 1;
+            max-width: 200px;
+            background: none;
+            border: none;
+            color: #777777;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: 'Lato', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 20px 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn.activo {
+            color: #E8E8E8;
+            border-bottom: 3px solid #C0C0C0;
+            background-color: #1a1a1a;
+        }
+
+        /* --- CONTENEDORES DE VISTAS --- */
+        .vista {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            flex-grow: 1;
+        }
+
+        /* --- ESTILOS DE LA SECCIÓN DE SUBIDA --- */
+        .header-coleccion {
+            width: 100%;
+            padding: 40px 20px 10px 20px;
+            box-sizing: border-box;
+        }
+
+        .titulo { 
+            font-family: 'Great Vibes', cursive; 
+            font-size: 56px; 
+            font-weight: 400; 
+            margin-bottom: 5px; 
+            color: #E8E8E8; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .subtitulo { 
+            font-size: 15px; 
+            color: #cccccc; 
+            margin: 0 auto 30px auto; 
+            max-width: 380px; 
+            line-height: 1.6;
+        }
+
+        .caja-subida {
+            background-color: #252525;
+            border: 2px dashed #C0C0C0; 
+            border-radius: 15px;
+            padding: 40px 20px;
+            width: 85%;
+            max-width: 400px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .boton-coleccionar {
             display: inline-flex; align-items: center; justify-content: center;
-            padding: 16px 36px; background-color: #d4af37; 
-            color: #1a1a1a; font-size: 16px; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 2px; border-radius: 50px; border: none; cursor: pointer;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); 
+            padding: 16px 36px; 
+            background-color: #C0C0C0; 
+            color: #1a1a1a; 
+            font-size: 15px; 
+            font-weight: 700; 
+            text-transform: uppercase;
+            letter-spacing: 2px; 
+            border-radius: 50px; 
+            border: none; 
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(192, 192, 192, 0.3); 
             transition: transform 0.2s;
+            margin-bottom: 20px;
         }
-        .boton-camara:active { transform: scale(0.95); }
+        .boton-coleccionar:active { transform: scale(0.95); }
 
-        /* Botón Secundario (Galería) */
-        .boton-galeria {
-            display: inline-flex; align-items: center; justify-content: center;
-            padding: 14px 30px; background-color: transparent; 
-            color: #d4af37; font-size: 14px; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 1px; border-radius: 50px; border: 2px solid #d4af37; cursor: pointer;
-            transition: all 0.2s;
-        }
-        .boton-galeria:active { transform: scale(0.95); background-color: rgba(212, 175, 55, 0.1); }
-
-        /* Iconos */
-        .icon-cam { width: 24px; height: 24px; margin-right: 12px; fill: none; stroke: #1a1a1a; stroke-width: 1.5; }
-        .icon-galeria { width: 20px; height: 20px; margin-right: 10px; fill: none; stroke: #d4af37; stroke-width: 1.5; }
+        .icon-corazon { width: 22px; height: 22px; margin-right: 12px; fill: none; stroke: #1a1a1a; stroke-width: 2; }
         
         .inputs-ocultos { display: none; }
-        #status { font-size: 14px; font-weight: 700; min-height: 20px; margin-top: 5px; color: #d4af37; text-align: center; }
-
-        /* --- SECCIÓN 2: GALERÍA --- */
-        .seccion-galeria {
-            background-color: #1a1a1a; 
-            padding: 5px 20px 60px 20px; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 60vh;
+        
+        #status-container {
+            margin-top: 20px;
             width: 100%;
+            max-width: 400px;
+            padding: 0 20px;
             box-sizing: border-box;
         }
 
+        #status { font-size: 15px; font-weight: 700; color: #C0C0C0; margin-bottom: 10px; }
+        
+        .progreso-fondo {
+            width: 100%;
+            height: 8px;
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .progreso-barra {
+            height: 100%;
+            width: 0%;
+            background-color: #C0C0C0; 
+            transition: width 0.3s ease;
+        }
+
+        /* --- ESTILOS DE LA GALERÍA ESTILO NENI & MICHAEL --- */
         .galeria-titulo { 
             font-size: 20px; 
             font-weight: 700; 
-            margin-bottom: 20px; 
-            color: #ffffff; 
-            width: 100%; 
-            max-width: 400px; 
+            margin: 30px 0 20px 0; 
+            color: #E8E8E8; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
-        
+
         .grid-galeria {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            display: flex;
             gap: 12px;
             width: 100%;
-            max-width: 400px;
+            max-width: 900px; /* Más ancho para que luzcan las fotos */
+            padding: 0 20px 60px 20px;
+            box-sizing: border-box;
         }
-        .foto-item {
+
+        .columna-masonry {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .foto-link {
+            display: block;
             width: 100%;
-            aspect-ratio: 1 / 1;
-            object-fit: cover;
             border-radius: 12px;
+            overflow: hidden;
+            background-color: #333;
             box-shadow: 0 4px 10px rgba(0,0,0,0.4); 
-            background-color: #333; 
+            animation: aparecer 0.5s ease-out;
+            cursor: pointer;
+        }
+
+        .foto-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .foto-link:hover .foto-img {
+            transform: scale(1.05); /* Zoom sutil al pasar el mouse/dedo */
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <div class="seccion-captura">
-        <div class="imagen-wrapper">
-            <img class="imagen-hero" src="https://drive.google.com/thumbnail?id=1X3AJXqITKclWcSgyc7o7idKBqecRKRI5&sz=w1200" alt="Fondo VIP">
+    <nav class="menu-superior">
+        <button class="tab-btn activo" id="btn-tab-subir">Subir Fotos</button>
+        <button class="tab-btn" id="btn-tab-galeria">Ver Galería</button>
+    </nav>
+
+    <div class="vista" id="vista-subir">
+        <div class="header-coleccion">
+            <div class="titulo">Comparte la Magia</div>
+            <div class="subtitulo">¡Gracias por acompañar a <b>Constanza</b> en esta noche tan especial! La historia no está completa sin tu punto de vista. Ayúdanos a coleccionar los mejores recuerdos compartiendo las fotos y videos que se quedaron en tu celular.</div>
         </div>
-        
-        <div class="contenido-textos">
-            <div class="titulo">Comparte tus fotos</div>
-            <div class="subtitulo">Toma una foto o graba un video corto (Máx 30 seg).</div>
 
-            <div class="contenedor-botones">
-                <button class="boton-camara" id="btn-capturar">
-                    <svg class="icon-cam" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                    CAPTURAR
-                </button>
-
-                <button class="boton-galeria" id="btn-subir-galeria">
-                    <svg class="icon-galeria" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                    SUBIR DE GALERÍA
-                </button>
-            </div>
+        <div class="caja-subida">
+            <button class="boton-coleccionar" id="btn-subir-recuerdos">
+                <svg class="icon-corazon" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                Seleccionar Recuerdos
+            </button>
+            <p style="font-size: 13px; color: #aaaaaa; margin: 0;">(Puedes elegir varias fotos a la vez)</p>
             
             <div class="inputs-ocultos">
-                <input type="file" accept="image/*,video/*" capture="environment" id="input-camara">
-                <input type="file" accept="image/*,video/*" id="input-archivos">
+                <input type="file" accept="image/*,video/*" multiple id="input-archivos">
             </div>
+        </div>
 
+        <div id="status-container">
             <div id="status"></div>
+            <div class="progreso-fondo" id="progreso-fondo">
+                <div class="progreso-barra" id="progreso-barra"></div>
+            </div>
         </div>
     </div>
 
-    <div class="seccion-galeria">
-        <div class="galeria-titulo">Últimas fotos en vivo 📸</div>
-        <p style="color: #aaaaaa; font-size: 13px; margin-top: -15px; margin-bottom: 25px; max-width: 350px; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">
-            *Los mensajes en video no se muestran aquí; se envían directamente a la bóveda secreta de la quinceañera. 🤫
-        </p>
-        <div class="grid-galeria" id="contenedor-galeria"></div>
+    <div class="vista" id="vista-galeria" style="display: none;">
+        <div class="galeria-titulo">Álbum de Constanza</div>
+        <div class="grid-galeria" id="contenedor-galeria">
+            </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
 
     <script>
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-ITwzdMThPc4iHYrqm60c9WPdpit_zd-3i-VILykk5uC2m_VKsu_ru_J4d6M5En3aIg/exec";
 
-        const btnCapturar = document.getElementById('btn-capturar');
-        const btnSubirGaleria = document.getElementById('btn-subir-galeria');
-        const inputCamara = document.getElementById('input-camara');
-        const inputArchivos = document.getElementById('input-archivos');
-        const statusDiv = document.getElementById('status');
+        // Referencias del menú
+        const btnTabSubir = document.getElementById('btn-tab-subir');
+        const btnTabGaleria = document.getElementById('btn-tab-galeria');
+        const vistaSubir = document.getElementById('vista-subir');
+        const vistaGaleria = document.getElementById('vista-galeria');
         const contenedorGaleria = document.getElementById('contenedor-galeria');
 
+        // Referencias de subida
+        const btnSubirRecuerdos = document.getElementById('btn-subir-recuerdos');
+        const inputArchivos = document.getElementById('input-archivos');
+        const statusDiv = document.getElementById('status');
+        const progresoFondo = document.getElementById('progreso-fondo');
+        const progresoBarra = document.getElementById('progreso-barra');
+
+        let lightboxInstancia = null;
+
+        // --- LÓGICA DE NAVEGACIÓN (TABS) ---
+        btnTabSubir.addEventListener('click', () => {
+            btnTabSubir.classList.add('activo');
+            btnTabGaleria.classList.remove('activo');
+            vistaSubir.style.display = 'flex';
+            vistaGaleria.style.display = 'none';
+        });
+
+        btnTabGaleria.addEventListener('click', () => {
+            btnTabGaleria.classList.add('activo');
+            btnTabSubir.classList.remove('activo');
+            vistaSubir.style.display = 'none';
+            vistaGaleria.style.display = 'flex';
+            cargarGaleria(); 
+        });
+
+        // --- LÓGICA DE LA GALERÍA ESTILO MASONRY ---
         function cargarGaleria() {
-            contenedorGaleria.innerHTML = "<p style='grid-column: span 2; font-size: 14px; color: #bbb;'>Cargando galería...</p>";
+            contenedorGaleria.innerHTML = "<p style='width: 100%; font-size: 14px; color: #bbb;'>Descubriendo recuerdos...</p>";
             
             fetch(GOOGLE_SCRIPT_URL)
             .then(response => response.json())
             .then(fotos => {
                 contenedorGaleria.innerHTML = ""; 
                 if(!fotos || fotos.length === 0) {
-                    contenedorGaleria.innerHTML = "<p style='grid-column: span 2; font-size: 14px; color: #ccc;'>Aún no hay capturas. ¡Sé el primero!</p>";
+                    contenedorGaleria.innerHTML = "<p style='width: 100%; font-size: 14px; color: #ccc;'>Aún no hay fotos. ¡Sé el primero en aportar a la colección!</p>";
                     return;
                 }
 
-                fotos.forEach(foto => {
-                    const imgUrl = `https://drive.google.com/thumbnail?id=${foto.id}&sz=w400`;
+                // Creamos 2 o 3 columnas dependiendo del tamaño de la pantalla
+                let numColumnas = window.innerWidth > 768 ? 3 : 2;
+                let columnas = [];
+                for (let i = 0; i < numColumnas; i++) {
+                    let col = document.createElement("div");
+                    col.className = "columna-masonry";
+                    contenedorGaleria.appendChild(col);
+                    columnas.push(col);
+                }
+
+                // Inyectamos las fotos ordenadamente en las columnas
+                fotos.forEach((foto, index) => {
+                    const miniatura = `https://drive.google.com/thumbnail?id=${foto.id}&sz=w600`;
+                    const altaRes = `https://drive.google.com/thumbnail?id=${foto.id}&sz=w1600`;
+
+                    const enlace = document.createElement('a');
+                    enlace.href = altaRes;
+                    enlace.className = 'foto-link glightbox';
+                    enlace.setAttribute("data-gallery", "galeria-constanza"); // Agrupa las fotos para deslizar
+
                     const imgElement = document.createElement('img');
-                    imgElement.src = imgUrl;
-                    imgElement.className = 'foto-item';
-                    contenedorGaleria.appendChild(imgElement);
+                    imgElement.src = miniatura;
+                    imgElement.className = 'foto-img';
+                    imgElement.loading = "lazy";
+
+                    enlace.appendChild(imgElement);
+
+                    // Reparte las fotos: Columna 1, Columna 2, Columna 1...
+                    let turnoColumna = index % numColumnas;
+                    columnas[turnoColumna].appendChild(enlace);
+                });
+
+                // Inicializamos el visor oscuro para poder abrir las fotos
+                if(lightboxInstancia) { lightboxInstancia.destroy(); }
+                lightboxInstancia = GLightbox({
+                    touchNavigation: true,
+                    loop: true,
+                    zoomable: false
                 });
             })
             .catch(error => {
-                contenedorGaleria.innerHTML = "<p style='grid-column: span 2; font-size: 14px; color: #ff6b6b;'>Error al cargar la galería.</p>";
+                contenedorGaleria.innerHTML = "<p style='width: 100%; font-size: 14px; color: #ff6b6b;'>Error al cargar el álbum. Intenta de nuevo.</p>";
             });
         }
 
-        // Cargamos la galería al iniciar
-        cargarGaleria();
+        // --- LÓGICA DE SUBIDA (MÚLTIPLE) ---
+        btnSubirRecuerdos.addEventListener('click', () => { inputArchivos.click(); });
 
-        // Conectamos los botones visuales con sus inputs ocultos correspondientes
-        btnCapturar.addEventListener('click', () => { inputCamara.click(); });
-        btnSubirGaleria.addEventListener('click', () => { inputArchivos.click(); });
+        inputArchivos.addEventListener('change', async function(event) {
+            const files = Array.from(event.target.files);
+            if (files.length === 0) return;
 
-        // Función maestra para procesar el archivo (ya sea de la cámara o de la galería)
-        function procesarArchivo(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+            btnSubirRecuerdos.disabled = true;
+            btnSubirRecuerdos.style.opacity = "0.5";
+            progresoFondo.style.display = "block";
 
-            if (file.type.startsWith('video/')) {
-                if (file.size > 41943040) { 
+            let subidosExitosamente = 0;
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                if (file.size > 41943040) {
                     statusDiv.style.color = "#ff6b6b";
-                    statusDiv.innerText = "❌ El video es muy pesado. Intenta subir uno más corto.";
-                    inputCamara.value = "";
-                    inputArchivos.value = "";
-                    return;
+                    statusDiv.innerText = `⚠️ El archivo ${i+1} es muy pesado y fue omitido.`;
+                    await pausa(1500);
+                    continue;
                 }
 
-                const videoElement = document.createElement('video');
-                videoElement.preload = 'metadata';
-                videoElement.onloadedmetadata = function() {
-                    window.URL.revokeObjectURL(videoElement.src);
-                    if (videoElement.duration > 31) { 
-                        statusDiv.style.color = "#ff6b6b";
-                        statusDiv.innerText = "❌ El video dura más de 30 segundos. Sube uno más corto.";
-                        inputCamara.value = "";
-                        inputArchivos.value = "";
-                        return;
-                    }
-                    subirArchivo(file, 'Video');
+                statusDiv.style.color = "#C0C0C0";
+                statusDiv.innerText = `⏳ Subiendo recuerdo ${i + 1} de ${files.length}...`;
+                
+                let porcentaje = ((i) / files.length) * 100;
+                progresoBarra.style.width = `${porcentaje}%`;
+
+                try {
+                    await subirArchivoComoPromesa(file);
+                    subidosExitosamente++;
+                } catch (error) {
+                    console.error("Error al subir archivo", error);
                 }
-                videoElement.src = URL.createObjectURL(file);
-            } else {
-                subirArchivo(file, 'Foto');
             }
+
+            progresoBarra.style.width = "100%";
+            statusDiv.style.color = "#4cd137"; 
+            statusDiv.innerText = `✨ ¡Gracias! Sumaste ${subidosExitosamente} recuerdos a la colección.`;
+            
+            inputArchivos.value = "";
+            btnSubirRecuerdos.disabled = false;
+            btnSubirRecuerdos.style.opacity = "1";
+            
+            setTimeout(() => {
+                progresoFondo.style.display = "none";
+                progresoBarra.style.width = "0%";
+            }, 3000);
+        });
+
+        function subirArchivoComoPromesa(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64Data = e.target.result.split(',')[1];
+                    const formData = new URLSearchParams();
+                    
+                    const tipo = file.type.startsWith('video/') ? 'Video' : 'Foto';
+                    const extension = tipo === 'Video' ? '.mp4' : '.jpg';
+                    const nombreArchivo = `Recuerdo_${tipo}_Constanza_${Date.now()}${extension}`;
+
+                    formData.append('fileData', base64Data);
+                    formData.append('mimeType', file.type);
+                    formData.append('fileName', nombreArchivo);
+
+                    fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: formData
+                    })
+                    .then(() => resolve())
+                    .catch(error => reject(error));
+                };
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(file);
+            });
         }
 
-        // Escuchamos a ambos inputs ocultos
-        inputCamara.addEventListener('change', procesarArchivo);
-        inputArchivos.addEventListener('change', procesarArchivo);
-
-        function subirArchivo(file, tipo) {
-            statusDiv.style.color = "#d4af37";
-            statusDiv.innerText = tipo === 'Video' ? "⏳ Subiendo video a la bóveda..." : "⏳ Subiendo tu foto a la galería...";
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const base64Data = e.target.result.split(',')[1];
-                const formData = new URLSearchParams();
-                
-                const extension = tipo === 'Video' ? '.mp4' : '.jpg';
-                const nombreArchivo = tipo + '_XV_' + Date.now() + extension;
-
-                formData.append('fileData', base64Data);
-                formData.append('mimeType', file.type);
-                formData.append('fileName', nombreArchivo);
-
-                fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: formData
-                })
-                .then(() => {
-                    statusDiv.style.color = "#4cd137"; 
-                    statusDiv.innerText = `✨ ¡Listo! ${tipo} guardado en la pantalla.`;
-                    inputCamara.value = ""; 
-                    inputArchivos.value = "";
-                    setTimeout(cargarGaleria, 2000); 
-                })
-                .catch(error => {
-                    statusDiv.style.color = "#ff6b6b";
-                    statusDiv.innerText = "❌ Hubo un error de conexión, intenta de nuevo.";
-                });
-            };
-            reader.readAsDataURL(file);
+        function pausa(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
         }
     </script>
 </body>
