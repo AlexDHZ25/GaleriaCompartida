@@ -167,7 +167,7 @@
             display: flex;
             gap: 12px;
             width: 100%;
-            max-width: 900px; /* Más ancho para que luzcan las fotos */
+            max-width: 900px; 
             padding: 0 20px 60px 20px;
             box-sizing: border-box;
         }
@@ -198,7 +198,7 @@
         }
 
         .foto-link:hover .foto-img {
-            transform: scale(1.05); /* Zoom sutil al pasar el mouse/dedo */
+            transform: scale(1.05); 
         }
 
         @keyframes aparecer {
@@ -296,7 +296,6 @@
                     return;
                 }
 
-                // Creamos 2 o 3 columnas dependiendo del tamaño de la pantalla
                 let numColumnas = window.innerWidth > 768 ? 3 : 2;
                 let columnas = [];
                 for (let i = 0; i < numColumnas; i++) {
@@ -306,7 +305,6 @@
                     columnas.push(col);
                 }
 
-                // Inyectamos las fotos ordenadamente en las columnas
                 fotos.forEach((foto, index) => {
                     const miniatura = `https://drive.google.com/thumbnail?id=${foto.id}&sz=w600`;
                     const altaRes = `https://drive.google.com/thumbnail?id=${foto.id}&sz=w1600`;
@@ -314,7 +312,8 @@
                     const enlace = document.createElement('a');
                     enlace.href = altaRes;
                     enlace.className = 'foto-link glightbox';
-                    enlace.setAttribute("data-gallery", "galeria-constanza"); // Agrupa las fotos para deslizar
+                    enlace.setAttribute("data-gallery", "galeria-constanza");
+                    enlace.setAttribute("data-type", "image"); // 🔑 LA LLAVE MÁGICA PARA GOOGLE DRIVE
 
                     const imgElement = document.createElement('img');
                     imgElement.src = miniatura;
@@ -323,12 +322,10 @@
 
                     enlace.appendChild(imgElement);
 
-                    // Reparte las fotos: Columna 1, Columna 2, Columna 1...
                     let turnoColumna = index % numColumnas;
                     columnas[turnoColumna].appendChild(enlace);
                 });
 
-                // Inicializamos el visor oscuro para poder abrir las fotos
                 if(lightboxInstancia) { lightboxInstancia.destroy(); }
                 lightboxInstancia = GLightbox({
                     touchNavigation: true,
